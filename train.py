@@ -18,7 +18,10 @@ train_loss = []
 val_loss = []
 accuracy = []
 
-
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+scheduler = ExponentialLR(optimizer, gamma=0.9)
+# scheduler = MultiStepLR(optimizer, milestones=[30,80], gamma=0.1) 
+criterion = nn.CrossEntropyLoss()
 
 
 n_epochs = 10
@@ -27,13 +30,39 @@ print_every = 40
 def train(model, optimizer, criterion, epochs, x_train, x_test, y_train, y_test):
     for i in range(epochs):
 
-
+        running_loss = 0
         for x, y in zip(x_train, y_train):
 
             if torch.cuda.is_available():
                 x = x.cuda()
                 y = y.cuda()
                 model = model.cuda()
+            
+            optimizer.zero_grad()
+
+            output = model.forward(x)
+
+            loss = criterion(output, y)
+
+            loss.backward()
+
+            optimizer.step()
+
+            running_loss += loss.item()
+
+            if i % print_every == 0:
+                print(f"\tIteration: {i}\t Loss: {running_loss/print_every:.4f}")
+                running_loss = 0
+
+
+    torch.save(model, 'model.pth')    
+
+
+
+
+
+            
+
             
 
 
