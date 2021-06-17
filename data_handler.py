@@ -5,18 +5,25 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import MNIST
 
-pth = ''
 
-def get_data(batch_size=32):
+def get_data(batch_size=64):
     
     transform = transforms.Compose([transforms.ToTensor()])
 
-    #training data and trainloader
+    # training data and trainloader
     train_data = MNIST('', download=True, train=True, transform=transform)
+    test_data = MNIST('', download=True, train=True, transform=transform)
+
     train_loader = DataLoader(train_data, batch_size, shuffle=True)
+    test_loader = DataLoader(test_data, batch_size, shuffle=False)
 
-    return train_dtrain_loaderata
+    x_train, y_train = next(iter(train_loader))
+    x_train = x_train.view(-1, 1, 784)  # x_train shape [64, 1, 784]
+    x_val, y_val = next(iter(test_loader))
+    x_val = x_train.view(-1, 1, 784)  # x_val shape [64, 1, 784]
 
-x = get_data( )
+    return x_train, y_train, x_val, y_val
+
+
 
 print(x.shape)
