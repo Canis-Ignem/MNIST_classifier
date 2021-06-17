@@ -15,8 +15,8 @@ def get_data(batch_size=32):
     train_data = MNIST('', download=True, train=True, transform=transform)
     train_loader = DataLoader(train_data, batch_size, shuffle=True)
 
-    return train_data
+    return train_dtrain_loaderata
 
 x = get_data( )
 
-
+print(x.shape)
