@@ -24,4 +24,4 @@ class NNetwork(nn.Module):
 
 
 model = NNetwork()
-summary(model, (1,784))
+summary(model.cuda(), (1,784))

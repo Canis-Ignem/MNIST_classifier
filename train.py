@@ -9,13 +9,8 @@ import data_handler as dh
 import torch.optim as optim
 from matplotlib import pyplot as plt 
 from sklearn.metrics import accuracy_score
+from time import time
 
-
-best_val = 10
-best_acc = 0
-train_loss = []
-val_loss = []
-accuracy = []
 
 optimizer = optim.Adam(model.parameters(), lr=0.01) # 0.005
 #scheduler = ExponentialLR(optimizer, gamma=0.9)
@@ -27,6 +22,11 @@ n_epochs = 2
 print_every = 50
 
 def train(model, optimizer, criterion, epochs):
+    best_val = 10
+    best_acc = 0
+    train_loss = []
+    val_loss = []
+    accuracy = []
     for i in range(epochs):
 
         train, test = dh.get_data()
@@ -88,10 +88,10 @@ def train(model, optimizer, criterion, epochs):
 
                 #print(correct_test/total_test)
                 train_loss.append(running_loss/print_every)
-                val_loss.append(validation_loss/n_batches)
+                val_loss.append(validation_loss.item()/n_batches)
                 accuracy.append(correct_test/total_test)
-                if best_val > val_loss/n_batches:
-                    best_val = val_loss/n_batches
+                if best_val > validation_loss/n_batches:
+                    best_val = validation_loss/n_batches
                     torch.save(model, 'best_loss_model.pth') 
 
                 if best_acc < correct_test/total_test:
@@ -105,8 +105,12 @@ def train(model, optimizer, criterion, epochs):
     plt.savefig("loss.png")
     #torch.save(model, 'model.pth')    
 
-train(model, optimizer, criterion, n_epochs)
 
+start = time()
+train(model, optimizer, criterion, n_epochs)
+end = time()
+
+print(f"The server took: {end-start:.4f} ")
 
 
             
