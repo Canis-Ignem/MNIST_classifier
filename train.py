@@ -102,7 +102,7 @@ def train(model, optimizer, criterion, epochs):
                 running_loss = 0
     plt.plot(train_loss)
     plt.plot(val_loss)
-    plt.show()
+    plt.savefig("loss.png")
     #torch.save(model, 'model.pth')    
 
 train(model, optimizer, criterion, n_epochs)
