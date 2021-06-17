@@ -17,11 +17,11 @@ def get_data(batch_size=64):
     train_loader = DataLoader(train_data, batch_size, shuffle=True)
     test_loader = DataLoader(test_data, batch_size, shuffle=False)
 
-    x_train, y_train = next(iter(train_loader))
-    x_train = x_train.view(-1, 1, 784)  # x_train shape [64, 1, 784]
-    x_val, y_val = next(iter(test_loader))
-    x_val = x_train.view(-1, 1, 784)  # x_val shape [64, 1, 784]
+    # x_train, y_train = next(iter(train_loader))
+    # x_train = x_train.view(-1, 1, 784)  # x_train shape [64, 1, 784]
+    # x_val, y_val = next(iter(test_loader))
+    # x_val = x_train.view(-1, 1, 784)  # x_val shape [64, 1, 784]
 
-    return x_train, y_train, x_val, y_val
+    return train_loader , test_loader 
 
 

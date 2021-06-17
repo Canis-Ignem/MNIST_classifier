@@ -12,7 +12,6 @@ from sklearn.metrics import accuracy_score
 
 
 
-x_train, y_train, x_test, y_test = dh.get_data()
 
 train_loss = []
 val_loss = []
@@ -24,35 +23,37 @@ optimizer = optim.Adam(model.parameters(), lr=0.01)
 criterion = nn.CrossEntropyLoss()
 
 
-n_epochs = 10
+n_epochs = 11
 print_every = 2
 
-def train(model, optimizer, criterion, epochs, x_train, x_test, y_train, y_test):
+def train(model, optimizer, criterion, epochs):
     for i in range(epochs):
 
+        train, test = dh.get_data()
+
         running_loss = 0
-        for x, y in zip(x_train, y_train):
+        for x, y in train:
+
+            x = x.reshape(-1,784)
             
             if torch.cuda.is_available():
                 x = x.cuda()
-                y_ = torch.zeros(1, dtype=int)
-                y_[0] = int(y.item())
-                y = y_.cuda()
+                
+                y = y.cuda()
+                #print(y)
                 model = model.cuda()
-            else:
-                x = x
-                y_ = torch.zeros(1, dtype=int)
-                y_[0] = int(y.item())
-                y = y_
+            # else:
+            #     x = x
+            #     y = y
 
                 
-            
+          
             optimizer.zero_grad()
 
             output = model.forward(x)
 
-            #print(output.shape)
-            #print(y.shape)
+            # print(output.shape)
+            # print(y.shape)
             
             loss = criterion(output, y)
 
@@ -69,7 +70,7 @@ def train(model, optimizer, criterion, epochs, x_train, x_test, y_train, y_test)
 
     torch.save(model, 'model.pth')    
 
-train(model, optimizer, criterion, n_epochs, x_train, x_test, y_train, y_test)
+train(model, optimizer, criterion, n_epochs)
 
 
 
