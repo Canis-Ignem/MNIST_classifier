@@ -3,8 +3,8 @@ import torch
 import torch.nn as nn
 import torchsummary as summary
 
-# from model import model
-# import data_handler as dh
+from linear_model import model
+import data_handler as dh
 
 import torch.optim as optim
 
@@ -12,14 +12,14 @@ from sklearn.metrics import accuracy_score
 
 
 
-# x_train, x_test, y_train, y_test = 
+x_train, y_train, x_test, y_test = dh.get_data()
 
 train_loss = []
 val_loss = []
 accuracy = []
 
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-scheduler = ExponentialLR(optimizer, gamma=0.9)
+#scheduler = ExponentialLR(optimizer, gamma=0.9)
 # scheduler = MultiStepLR(optimizer, milestones=[30,80], gamma=0.1) 
 criterion = nn.CrossEntropyLoss()
 
@@ -57,7 +57,7 @@ def train(model, optimizer, criterion, epochs, x_train, x_test, y_train, y_test)
 
     torch.save(model, 'model.pth')    
 
-
+train(model, optimizer, criterion, n_epochs, x_train, x_test, y_train, y_test)
 
 
 

@@ -25,5 +25,3 @@ def get_data(batch_size=64):
     return x_train, y_train, x_val, y_val
 
 
-
-print(x.shape)
