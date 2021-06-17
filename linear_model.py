@@ -1,7 +1,10 @@
+from torch import nn
+import torch.nn.functional as F
 from torchsummary import summary
 
+
 class NNetwork(nn.Module):
-    
+
     # Defining the layers, 128, 64, 10 units each
     def __init__(self):
         super().__init__()
