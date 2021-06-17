@@ -32,16 +32,35 @@ def train(model, optimizer, criterion, epochs, x_train, x_test, y_train, y_test)
 
         running_loss = 0
         for x, y in zip(x_train, y_train):
-
+            
             if torch.cuda.is_available():
                 x = x.cuda()
-                y = y.cuda()
+                #y_ = np.zeros(1)
+                #y_[y.item()] = 1
+                #y = torch.from_numpy(y_)
+                y_ = torch.zeros(1, dtype=int)
+                y_[0] = int(y.item())
+                y = y_.cuda()
                 model = model.cuda()
+            else:
+                x = x
+                #y_ = np.zeros(1)
+                #y_[y.item()] = 1
+                #y = torch.from_numpy(y_)
+
+                y_ = torch.zeros(1, dtype=int)
+                y_[0] = int(y.item())
+                y = y_
+
+                
             
             optimizer.zero_grad()
 
             output = model.forward(x)
 
+            #print(output.shape)
+            #print(y.shape)
+            
             loss = criterion(output, y)
 
             loss.backward()
