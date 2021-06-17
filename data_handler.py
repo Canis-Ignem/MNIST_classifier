@@ -15,7 +15,7 @@ def get_data(batch_size=64):
     test_data = MNIST('', download=True, train=True, transform=transform)
 
     train_loader = DataLoader(train_data, batch_size, shuffle=True)
-    test_loader = DataLoader(test_data, batch_size, shuffle=True)
+    test_loader = DataLoader(test_data, batch_size, shuffle=False)
 
     x_train, y_train = next(iter(train_loader))
     x_train = x_train.view(-1, 1, 784)  # x_train shape [64, 1, 784]
