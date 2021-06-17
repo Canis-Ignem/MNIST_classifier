@@ -5,7 +5,7 @@ from torchsummary import summary
 
 class NNetwork(nn.Module):
 
-    # Defining the layers, 128, 64, 10 units each
+    # Defining the layers, 128, 64, 16, 10 units each
     def __init__(self):
         super().__init__()
         self.fc1 = nn.Linear(784, 128)
@@ -13,7 +13,7 @@ class NNetwork(nn.Module):
         self.fc3 = nn.Linear(64, 16)
         self.fc4 = nn.Linear(16, 10)
 
-    # Forward pass through the network, returns the output logits
+    # Forward function
     def forward(self, x):
         x = self.fc1(x)
         x = F.relu(x)
