@@ -10,8 +10,7 @@ class NNetwork(nn.Module):
         super().__init__()
         self.fc1 = nn.Linear(784, 128)
         self.fc2 = nn.Linear(128, 64)
-        self.fc3 = nn.Linear(64, 16)
-        self.fc4 = nn.Linear(16, 10)
+        self.fc3 = nn.Linear(64, 10)
 
     # Forward function
     def forward(self, x):
@@ -20,11 +19,9 @@ class NNetwork(nn.Module):
         x = self.fc2(x)
         x = F.relu(x)
         x = self.fc3(x)
-        x = F.relu(x)
-        x = self.fc4(x)
         x = F.softmax(x, dim=1)
         return x
 
 
 model = NNetwork()
-summary(model)
+summary(model, (784))
